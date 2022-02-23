@@ -1,40 +1,58 @@
 
-import {Component, StrictMode} from 'react';
+import {Component} from 'react';
 import './App.css';
 
-const HelloW = ()=>{
-  return <h2>Hello World!</h2>
-};
 
-class Field extends Component{
+class WhoAmI extends Component{
+  constructor(props){
+    super(props);
+    this.state= {
+      years: 27,
+      text: 'myButonToADD'
+    }
+      
+    }
+
+    nextYear=()=>{
+      this.setState (state=> ({
+        years : this.state.years+1
+      }))
+    }
+
+    commitInputChanges = (e,color)=>{
+      console.log(color)
+      this.setState({
+        position:e.target.value
+      })
+    }
   render(){
-    const holder ='Enter Here'
-    const styleComp ={
-      width:'400px'
-    };
+    const {name, surname, link} = this.props;
+    const {position, years} = this.state;
 
-    return <input placeholder={holder} 
-      type={'text'} 
-      style={styleComp}/>
+    console.log(this);
+
+    return(
+      <div>
+        <button onClick={this.nextYear}>{this.state.text}</button>
+        <h2>My name is {name}, surname {surname} , 
+        age {years}, 
+        position-{position}</h2>
+        <a href={link}>my link</a>
+        <form>
+          <span>Введите должность</span>
+          <input type="text" onChange={(e)=>this.commitInputChanges(e,"some color")} />
+        </form>
+      </div>
+    );
   }
-}
-
-function Btn(){
-  const text = 'Log In'
-  const logged = false;
-  
-  return <button>{logged?'Enter': text}</button>
 }
 
 
 function App() {
   return (
     <div className="App">
-      <StrictMode>
-        <HelloW/>
-      </StrictMode>
-      <Field/>
-      <Btn/>
+      <WhoAmI name= 'JOhn' surname = "Petrov" link="yandex.ru"/>
+      <WhoAmI name= 'Alex' surname = "Sidorov" link="facebook.com"/>
     </div>
   );
 }
