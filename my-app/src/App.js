@@ -29,9 +29,19 @@ function Btn() {
   return <button>{logged ? 'Enter' : text}</button>
 }
 
+function WhoAmI(props) {
+  return (
+    <div>
+      <h1>My name is {props.name}, surname is {props.surname}</h1>
+      <a href={props.link}>Some Link</a>
+    </div>
+  )
+}
+
 function App() {
   return (
     <div className="App">
+      <WhoAmI name="Alexander" surname="Grygoriev" link="google.com"/>
       <Header/>
       <Field/>
       <Btn/>
