@@ -22,20 +22,31 @@ return <input type="text" placeholder={holder} style={styleField}/>
   }
 }
 
-function Btn() {
-  const text = "Log in";
-  const logged = false;
 
-  return <button>{logged ? 'Enter' : text}</button>
-}
 
-function WhoAmI(props) {
-  return (
-    <div>
-      <h1>My name is {props.name}, surname is {props.surname}</h1>
-      <a href={props.link}>Some Link</a>
-    </div>
-  )
+class WhoAmI extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      years: 27
+    }
+  }
+
+  nextYear = (e)=>{
+    console.log('hello' + e);
+  }
+
+  render(){
+    const {name, surname, link} = this.props;
+    return (
+      <div>
+        <h1>My name is {name}, surname is {surname}, age = {this.state.years}</h1>
+        <a href={link}>Some Link</a>
+        <button onClick={this.nextYear}>{'Enter'}</button>
+      </div>
+    )
+  };
+
 }
 
 function App() {
@@ -44,7 +55,6 @@ function App() {
       <WhoAmI name="Alexander" surname="Grygoriev" link="google.com"/>
       <Header/>
       <Field/>
-      <Btn/>
     </div>
   );
 }
