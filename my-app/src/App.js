@@ -32,8 +32,10 @@ class WhoAmI extends Component {
     }
   }
 
-  nextYear = (e)=>{
-    console.log('hello' + e);
+  nextYear = () => {
+    this.setState(state => ({
+      years: state.years +1
+    }));
   }
 
   render(){
@@ -55,6 +57,8 @@ function App() {
       <WhoAmI name="Alexander" surname="Grygoriev" link="google.com"/>
       <Header/>
       <Field/>
+      <WhoAmI name="Александр" surname="Григорьев" link="google.com"/>
+
     </div>
   );
 }
