@@ -10,6 +10,11 @@ const Header = () => {
 
 
 class Field extends Component {
+
+  changeValue = (e) => {
+    console.log(e.target.value);
+  }
+
   render(){
     const holder = 'Enter here'
     const styleField = {
@@ -18,7 +23,7 @@ class Field extends Component {
       height: '50px'
     };
  
-return <input type="text" placeholder={holder} style={styleField}/>
+return <input onChange = {this.changeValue} type="text" placeholder={holder} style={styleField}/>
   }
 }
 
@@ -28,7 +33,8 @@ class WhoAmI extends Component {
   constructor(props){
     super(props);
     this.state = {
-      years: 27
+      years: 27,
+      position: ''
     }
   }
 
