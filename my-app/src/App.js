@@ -1,86 +1,57 @@
 
 import React, {Component} from 'react';
-import ReactDom from 'react-dom';
 import {Container} from 'react-bootstrap';
 import './App.css';
-import BootstrapTest from './bootstrapTest';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const style = {
+  'color':'blue',
+  'fontSize': '35px'
+}
+
+const Header = () => {
+  return <h2 style={style}> Hello world!</h2>
+}
 
 
-
-
-
-class Form extends Component {
-
-  state = {
-    advOpen: false
-  }
-
-  componentDidMount() {
-    setTimeout(this.handleClick, 3000);
-  }
-
-  handleClick = () => {
-    this.setState(({advOpen}) => ({
-      advOpen: !advOpen
-    }))
-  }
-
-  render() {
-    return(
-      <Container>
-        <form onClick={this.handleClick}
-        className='w-50 border mt-5 p-3 m-auto'
-        style={{'position':'relative',
-                'overflow':'hidden'}}>
-          <div className='mb-3'>
-            <label htmlFor='exampleFormControlInput1' className="form-label">Email Address</label>
-            <input type="email" className='form-control' id='exampleFormControlInput1'placeholder='name@example.com' />
-          </div>
-          <div className='mb-3'>
-            <label htmlFor="exampleFormControlTextArea1" className='form-label'>Example Text-Area</label>
-            <textarea 
-            className='form-control' id='exampleFormControlTextArea1' rows='3'></textarea>
-          </div>
-          {
-            this.state.advOpen ? 
-            <Portal>
-              <Msg/>
-            </Portal> : null
-          }
-
-        </form>
-      </Container>
+class Field extends Component {
+  render(){
+    return (
+      <input type="text" placeholder='text here' />
     )
   }
 }
 
-const Portal = (props) => {
-  const node = document.createElement('div');
-  document.body.appendChild(node);
-  return ReactDom.createPortal(props.children, node);
+const ButtonSome = () => {
+  const text = () => {
+   return 'Log in';
+  }
+  return <button>{text()}</button>
 }
 
-const Msg = () => {
-  return(
-    <div
-        style={{'width': '500px',
-                'height': '150px',
-                'backgroundColor': 'red',
-                'position': 'absolute',
-                'right': '0',
-                'bottom': '0'}
-
-    }>
-      Hello
+function WhoAmI ({name, surname, link}) {
+  return (
+    <div style={style} >
+      <h2>My name is {name} surname - {surname}</h2>
+      <a href={link}>Link for my profile</a>
     </div>
   )
 }
 
+
 function App() {
   return (
-    <Form/>
+    <div className='App'>
+      <Header />
+      <Field/>
+      <ButtonSome/>
+      <WhoAmI name={'Ivan'} surname={"Petrechenko"}
+      link={"https://bing.com"}/>     
+      <WhoAmI name={'Sasha'} surname={"Grygoriev"}
+      link={"https://www.google.com"}/>
+    </div>
+
+
   );
 
 }
