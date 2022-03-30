@@ -4,51 +4,47 @@ import {Container} from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const style = {
-  'color':'blue',
-  'fontSize': '35px'
-}
-
-const Header = () => {
-  return <h2 style={style}> Hello world!</h2>
-}
-
-
-class Field extends Component {
-  render(){
+class Card extends Component {
+  render() {
     return (
-      <input type="text" placeholder='text here' />
+      <div className='card'>
+        <Square color={this.props.color} />
+        <Lebel {...this.props} />
+      </div>
     )
   }
 }
 
-const ButtonSome = () => {
-  const text = () => {
-   return 'Log in';
+class Square extends Component {
+
+
+  render() {
+    return (
+      <div className='square'
+      style={{backgroundColor: 'pink'}}>
+
+      </div>
+    )
   }
-  return <button>{text()}</button>
 }
 
-function WhoAmI ({name, surname, link}) {
-  return (
-    <div style={style} >
-      <h2>My name is {name} surname - {surname}</h2>
-      <a href={link}>Link for my profile</a>
-    </div>
-  )
+class Lebel extends Component{
+  render() {
+    return (
+      <div className='lebel'>
+        <p>{this.props.color}</p>
+      </div>
+    )
+  }
 }
 
 
 function App() {
   return (
     <div className='App'>
-      <Header />
-      <Field/>
-      <ButtonSome/>
-      <WhoAmI name={'Ivan'} surname={"Petrechenko"}
-      link={"https://bing.com"}/>     
-      <WhoAmI name={'Sasha'} surname={"Grygoriev"}
-      link={"https://www.google.com"}/>
+      <Card color ="red">
+
+      </Card>
     </div>
 
 
