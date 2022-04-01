@@ -5,37 +5,21 @@ import  './App.css';
 
 
 
-class Card extends Component {
-  render() {
-    return (
-      <div className='card'>
-        <Square color={this.props.color} />
-        <Lebel {...this.props} />
-      </div>
-    )
+class LightningCounter extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      strikes: 0
+    };
+    this.timerTick = this.timerTick.bind(this);
   }
-}
 
-class Square extends Component {
+  timerTick() {
+    this.setState(()=>{
 
+        strikes: this.state.strikes + 100
 
-  render() {
-    return (
-      <div className='square'
-      style={{backgroundColor: 'pink'}}>
-
-      </div>
-    )
-  }
-}
-
-class Lebel extends Component{
-  render() {
-    return (
-      <div className='lebel'>
-        <p>{this.props.color}</p>
-      </div>
-    )
+    })
   }
 }
 
@@ -47,9 +31,7 @@ function App() {
 
     <div className='App'>
 
-      <Card color ="red">
 
-      </Card>
     </div>
 
 
