@@ -1,8 +1,7 @@
 
 import React, {Component} from 'react';
-import {Container} from 'react-bootstrap';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+import  './App.css';
 
 class LightningCounter extends Component {
   constructor (props) {
