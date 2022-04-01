@@ -1,66 +1,80 @@
 
-import {Component} from 'react';
+import React, {Component} from 'react';
+import {Container} from 'react-bootstrap';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-const Header = () => {
-  return <h2>Hello React!</h2>
+const style = {
+  'color':'blue',
+  'fontSize': '35px'
 }
-
-
-
-class Field extends Component {
-  render(){
-    const holder = 'Enter here'
-    const styleField = {
-      backgroundColor: 'yellow',
-      width: '300px',
-      height: '50px'
-    };
- 
-return <input type="text" placeholder={holder} style={styleField}/>
-  }
-}
-
-
 
 class WhoAmI extends Component {
+
   constructor(props){
     super(props);
     this.state = {
-      years: 27
+      years: 27,
+      text: '++'
     }
+
   }
 
+<<<<<<< HEAD
   nextYear = () => {
     this.setState(state => ({
       years: state.years +1
     }));
+=======
+  nextYear = () =>{
+    this.setState(state => ({
+      years: state.years +1
+    }))
+>>>>>>> 019ba872bc91750a63d2e15ac016187017afa613
   }
-
+  
   render(){
     const {name, surname, link} = this.props;
-    return (
-      <div>
-        <h1>My name is {name}, surname is {surname}, age = {this.state.years}</h1>
-        <a href={link}>Some Link</a>
-        <button onClick={this.nextYear}>{'Enter'}</button>
-      </div>
-    )
-  };
+      return (
+
+        <div style={style} >
+          <button onClick={this.nextYear}>{this.state.text}</button>
+          <h2>My name is {name} surname - {surname}, age {this.state.years}</h2>
+          <a href={link}>Link for my profile</a>
+        </div>
+      )
+  }
 
 }
 
+
 function App() {
+
+
   return (
+<<<<<<< HEAD
     <div className="App">
       <WhoAmI name="Alexander" surname="Grygoriev" link="google.com"/>
       <Header/>
       <Field/>
       <WhoAmI name="Александр" surname="Григорьев" link="google.com"/>
 
+=======
+    <div className='App'>
+
+      <WhoAmI name={'Ivan'} surname={"Petrechenko"}
+      link={"https://bing.com"}/>
+      <br/>
+      <hr/>
+      <br/>     
+      <WhoAmI name={'Sasha'} surname={"Grygoriev"}
+      link={"https://www.google.com"}/>
+>>>>>>> 019ba872bc91750a63d2e15ac016187017afa613
     </div>
+
+
   );
+
 }
 
 
