@@ -9,44 +9,49 @@ const style = {
   'fontSize': '35px'
 }
 
-const Header = () => {
-  return <h2 style={style}> Hello world!</h2>
-}
+class WhoAmI extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      years: 27,
+      text: '++'
+    }
 
-class Field extends Component {
+  }
+
+  nextYear = () =>{
+    this.setState(state => ({
+      years: state.years +1
+    }))
+  }
+  
   render(){
-    return (
-      <input type="text" placeholder='text here' />
-    )
-  }
-}
+    const {name, surname, link} = this.props;
+      return (
 
-const ButtonSome = () => {
-  const text = () => {
-   return 'Log in';
+        <div style={style} >
+          <button onClick={this.nextYear}>{this.state.text}</button>
+          <h2>My name is {name} surname - {surname}, age {this.state.years}</h2>
+          <a href={link}>Link for my profile</a>
+        </div>
+      )
   }
-  return <button>{text()}</button>
-}
 
-function WhoAmI ({name, surname, link}) {
-  return (
-    <div style={style} >
-      <h2>My name is {name} surname - {surname}</h2>
-      <a href={link}>Link for my profile</a>
-    </div>
-  )
 }
 
 
 function App() {
+
+
   return (
     <div className='App'>
-      <Header />
-      <Field/>
-      <ButtonSome/>
+
       <WhoAmI name={'Ivan'} surname={"Petrechenko"}
-      link={"https://bing.com"}/>     
+      link={"https://bing.com"}/>
+      <br/>
+      <hr/>
+      <br/>     
       <WhoAmI name={'Sasha'} surname={"Grygoriev"}
       link={"https://www.google.com"}/>
     </div>
