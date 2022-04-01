@@ -4,35 +4,39 @@ import {Container} from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class Card extends Component {
+class LightningCounter extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      strikes: 0
+    }
+  };
+
   render() {
-    return (
-      <div className='card'>
-        <Square color={this.props.color} />
-        <Lebel {...this.props} />
-      </div>
+    return(
+      <h1>{this.state.strikes}</h1>
     )
   }
 }
 
-class Square extends Component {
+class LightningCounterDisplay extends Component {
 
 
-  render() {
-    return (
-      <div className='square'
-      style={{backgroundColor: 'pink'}}>
+  
+  render(){
+    const divStyle = {
+      width: 250,
+      textAlign: 'center',
+      backgroundColor: 'black',
+      padding: 40,
+      fontFamily: 'sans-serif',
+      color: '#999',
+      borderRadius: 10
+    };
 
-      </div>
-    )
-  }
-}
-
-class Lebel extends Component{
-  render() {
-    return (
-      <div className='lebel'>
-        <p>{this.props.color}</p>
+    return(
+      <div style={divStyle}>
+        <LightningCounter/>
       </div>
     )
   }
@@ -42,9 +46,7 @@ class Lebel extends Component{
 function App() {
   return (
     <div className='App'>
-      <Card color ="red">
-
-      </Card>
+      <LightningCounterDisplay/>
     </div>
 
 
