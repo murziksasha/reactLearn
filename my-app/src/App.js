@@ -1,50 +1,42 @@
 
 import React, {Component} from 'react';
-import {Container} from 'react-bootstrap';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-const style = {
-  'color':'blue',
-  'fontSize': '35px'
+import  './App.css';
+
+
+
+class Card extends Component {
+  render() {
+    return (
+      <div className='card'>
+        <Square color={this.props.color} />
+        <Lebel {...this.props} />
+      </div>
+    )
+  }
 }
 
-class WhoAmI extends Component {
+class Square extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      years: 27,
-      text: '++'
-    }
 
+  render() {
+    return (
+      <div className='square'
+      style={{backgroundColor: 'pink'}}>
+
+      </div>
+    )
   }
+}
 
-<<<<<<< HEAD
-  nextYear = () => {
-    this.setState(state => ({
-      years: state.years +1
-    }));
-=======
-  nextYear = () =>{
-    this.setState(state => ({
-      years: state.years +1
-    }))
->>>>>>> 019ba872bc91750a63d2e15ac016187017afa613
+class Lebel extends Component{
+  render() {
+    return (
+      <div className='lebel'>
+        <p>{this.props.color}</p>
+      </div>
+    )
   }
-  
-  render(){
-    const {name, surname, link} = this.props;
-      return (
-
-        <div style={style} >
-          <button onClick={this.nextYear}>{this.state.text}</button>
-          <h2>My name is {name} surname - {surname}, age {this.state.years}</h2>
-          <a href={link}>Link for my profile</a>
-        </div>
-      )
-  }
-
 }
 
 
@@ -52,24 +44,12 @@ function App() {
 
 
   return (
-<<<<<<< HEAD
-    <div className="App">
-      <WhoAmI name="Alexander" surname="Grygoriev" link="google.com"/>
-      <Header/>
-      <Field/>
-      <WhoAmI name="Александр" surname="Григорьев" link="google.com"/>
 
-=======
     <div className='App'>
 
-      <WhoAmI name={'Ivan'} surname={"Petrechenko"}
-      link={"https://bing.com"}/>
-      <br/>
-      <hr/>
-      <br/>     
-      <WhoAmI name={'Sasha'} surname={"Grygoriev"}
-      link={"https://www.google.com"}/>
->>>>>>> 019ba872bc91750a63d2e15ac016187017afa613
+      <Card color ="red">
+
+      </Card>
     </div>
 
 
