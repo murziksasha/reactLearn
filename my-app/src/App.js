@@ -11,20 +11,26 @@ class LightningCounter extends Component {
     this.state = {
       strikes: 0
     };
-    this.timerTick = this.timerTick.bind(this);
+    // this.timerTick = this.timerTick.bind(this);
   }
 
-  timerTick() {
-    this.setState(()=>({
+  componentDidMount(){
+    setInterval(this.timerTick, 1000);
+  }
 
-        strikes: this.state.strikes + 100
+  timerTick = ()=> {
+    this.setState((prevState)=>({
+
+        strikes: prevState.strikes + 100
 
     }))
+
+
   }
 
   render(){
     return (
-      <h1>Hello!</h1>
+      <h1>{this.state.strikes}</h1>
     )
   }
 }
@@ -43,6 +49,9 @@ class LightningCounterDisplay extends Component {
     return(
       <div style={divStyle}>
         <LightningCounter/>
+        <h2>Flash Lightning</h2>
+        <h2>on the Earth</h2>
+        <p>from start code moment</p>
       </div>
     )
   }
