@@ -20,17 +20,11 @@ class WhoAmI extends Component {
 
   }
 
-<<<<<<< HEAD
-  nextYear = () => {
-    this.setState(state => ({
-      years: state.years +1
-    }));
-=======
+
   nextYear = () =>{
     this.setState(state => ({
       years: state.years +1
     }))
->>>>>>> 019ba872bc91750a63d2e15ac016187017afa613
   }
   
   render(){
@@ -52,14 +46,7 @@ function App() {
 
 
   return (
-<<<<<<< HEAD
-    <div className="App">
-      <WhoAmI name="Alexander" surname="Grygoriev" link="google.com"/>
-      <Header/>
-      <Field/>
-      <WhoAmI name="Александр" surname="Григорьев" link="google.com"/>
 
-=======
     <div className='App'>
 
       <WhoAmI name={'Ivan'} surname={"Petrechenko"}
@@ -69,7 +56,6 @@ function App() {
       <br/>     
       <WhoAmI name={'Sasha'} surname={"Grygoriev"}
       link={"https://www.google.com"}/>
->>>>>>> 019ba872bc91750a63d2e15ac016187017afa613
     </div>
 
 
