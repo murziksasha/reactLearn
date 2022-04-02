@@ -3,49 +3,68 @@ import React, {Component} from 'react';
 
 import  './App.css';
 
-class LightningCounter extends Component {
-  constructor (props) {
+
+class WhoAmI extends Component {
+
+  constructor(props){
     super(props);
     this.state = {
-      strikes: 0
+      years: 27,
+      text: '++',
+      valueText: ''
     }
-  };
 
-  render() {
-    return(
-      <h1>{this.state.strikes}</h1>
-    )
   }
-}
-
-class LightningCounterDisplay extends Component {
 
 
+  nextYear = () =>{
+    this.setState(state => ({
+      years: state.years +1
+    }))
+  }
+
+  commitInputChanges = (e) => {
+    this.setState ({
+      valueText:  e.target.value
+    })
+  }
   
   render(){
-    const divStyle = {
-      width: 250,
-      textAlign: 'center',
-      backgroundColor: 'black',
-      padding: 40,
-      fontFamily: 'sans-serif',
-      color: '#999',
-      borderRadius: 10
-    };
+    const {name, surname, link} = this.props;
+    const {valueText, years} = this.state;
+      return (
 
-    return(
-      <div style={divStyle}>
-        <LightningCounter/>
-      </div>
-    )
+        <div >
+          <button onClick={this.nextYear}>{this.state.text}</button>
+          <h2>My name is {name} surname - {surname}, age {years}</h2>
+          <a href={link}>Link for my profile</a>
+          <form>
+            <span>Enter the position</span>
+            <input type="text" onChange={this.commitInputChanges} />
+            <p>{valueText}</p>
+          </form>
+        </div>
+      )
   }
+
+
 }
 
 
 function App() {
+
+
   return (
     <div className='App'>
-      <LightningCounterDisplay/>
+
+      <WhoAmI name={'Ivan'} surname={"Petrechenko"}
+      link={"https://bing.com"}/>
+      <br/>
+      <hr/>
+      <br/>     
+      <WhoAmI name={'Sasha'} surname={"Grygoriev"}
+      link={"https://www.google.com"}/>
+
     </div>
 
 
