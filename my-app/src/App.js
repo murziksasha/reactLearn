@@ -1,13 +1,8 @@
 
 import React, {Component} from 'react';
-import {Container} from 'react-bootstrap';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-const style = {
-  'color':'blue',
-  'fontSize': '35px'
-}
+import  './App.css';
+
 
 class WhoAmI extends Component {
 
@@ -15,7 +10,8 @@ class WhoAmI extends Component {
     super(props);
     this.state = {
       years: 27,
-      text: '++'
+      text: '++',
+      valueText: ''
     }
 
   }
@@ -24,20 +20,34 @@ class WhoAmI extends Component {
   nextYear = () =>{
     this.setState(state => ({
       years: state.years +1
-    }))
+    }));
+  }
+
+  commitInputChanges = (e) => {
+    this.setState ({
+      valueText:  e.target.value
+    })
+
   }
   
   render(){
     const {name, surname, link} = this.props;
+    const {valueText, years} = this.state;
       return (
 
-        <div style={style} >
+        <div >
           <button onClick={this.nextYear}>{this.state.text}</button>
-          <h2>My name is {name} surname - {surname}, age {this.state.years}</h2>
+          <h2>My name is {name} surname - {surname}, age {years}</h2>
           <a href={link}>Link for my profile</a>
+          <form>
+            <span>Enter the position</span>
+            <input type="text" onChange={this.commitInputChanges} />
+            <p>{valueText}</p>
+          </form>
         </div>
       )
   }
+
 
 }
 
@@ -46,6 +56,7 @@ function App() {
 
 
   return (
+
 
     <div className='App'>
 
