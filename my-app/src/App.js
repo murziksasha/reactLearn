@@ -4,50 +4,59 @@ import React, {Component} from 'react';
 import  './App.css';
 
 
-class WhoAmI extends Component {
 
+class LightningCounter extends Component {
   constructor(props){
     super(props);
     this.state = {
-      years: 27,
-      text: '++',
-      valueText: ''
-    }
+      strikes: 0
+    };
+    // this.timerTick = this.timerTick.bind(this);
+  }
+
+  componentDidMount(){
+    setInterval(this.timerTick, 1000);
+  }
+
+  timerTick = ()=> {
+    this.setState((prevState)=>({
+
+        strikes: prevState.strikes + 100
+
+    }))
 
   }
 
-
-  nextYear = () =>{
-    this.setState(state => ({
-      years: state.years +1
-    }));
-  }
-
-  commitInputChanges = (e) => {
-    this.setState ({
-      valueText:  e.target.value
-    })
-
-  }
-  
   render(){
-    const {name, surname, link} = this.props;
-    const {valueText, years} = this.state;
-      return (
 
-        <div >
-          <button onClick={this.nextYear}>{this.state.text}</button>
-          <h2>My name is {name} surname - {surname}, age {years}</h2>
-          <a href={link}>Link for my profile</a>
-          <form>
-            <span>Enter the position</span>
-            <input type="text" onChange={this.commitInputChanges} />
-            <p>{valueText}</p>
-          </form>
-        </div>
-      )
+    return (
+      <h1>{this.state.strikes}</h1>
+    )
+
   }
+}
 
+
+class LightningCounterDisplay extends Component {
+  render(){
+    const divStyle = {
+      width: 250,
+      textAlign: 'center',
+      backgroundColor: 'black',
+      padding: 40,
+      fontFamily: 'sans-serif',
+      color: '#999',
+      borderRadius: 10
+    };
+    return(
+      <div style={divStyle}>
+        <LightningCounter/>
+        <h2>Flash Lightning</h2>
+        <h2>on the Earth</h2>
+        <p>from start code moment</p>
+      </div>
+    )
+  }
 
 }
 
@@ -59,14 +68,9 @@ function App() {
 
 
     <div className='App'>
+      <LightningCounterDisplay/>
 
-      <WhoAmI name={'Ivan'} surname={"Petrechenko"}
-      link={"https://bing.com"}/>
-      <br/>
-      <hr/>
-      <br/>     
-      <WhoAmI name={'Sasha'} surname={"Grygoriev"}
-      link={"https://www.google.com"}/>
+
     </div>
 
 
