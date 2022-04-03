@@ -1,8 +1,6 @@
 
 import React, {Component} from 'react';
-import {Container} from 'react-bootstrap';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const style = {
   'color':'blue',
@@ -15,32 +13,38 @@ class WhoAmI extends Component {
     super(props);
     this.state = {
       years: 27,
-      text: '++'
+      text: '++',
+      enterText: ''
     }
 
   }
 
-<<<<<<< HEAD
-  nextYear = () => {
-    this.setState(state => ({
-      years: state.years +1
-    }));
-=======
   nextYear = () =>{
     this.setState(state => ({
       years: state.years +1
     }))
->>>>>>> 019ba872bc91750a63d2e15ac016187017afa613
+  }
+
+  changeText = (e) => {
+    this.setState({
+      enterText: e.target.value
+    })
   }
   
   render(){
     const {name, surname, link} = this.props;
+    const {text, years, enterText} = this.state;
       return (
 
         <div style={style} >
-          <button onClick={this.nextYear}>{this.state.text}</button>
-          <h2>My name is {name} surname - {surname}, age {this.state.years}</h2>
+          <button onClick={this.nextYear}>{text}</button>
+          <h2>My name is {name} surname - {surname}, age {years}</h2>
           <a href={link}>Link for my profile</a>
+          <form >
+            <span>Enter some text</span>
+            <input type="text" onChange={this.changeText} />
+            <p>{enterText}</p>
+          </form>
         </div>
       )
   }
@@ -52,14 +56,7 @@ function App() {
 
 
   return (
-<<<<<<< HEAD
-    <div className="App">
-      <WhoAmI name="Alexander" surname="Grygoriev" link="google.com"/>
-      <Header/>
-      <Field/>
-      <WhoAmI name="Александр" surname="Григорьев" link="google.com"/>
 
-=======
     <div className='App'>
 
       <WhoAmI name={'Ivan'} surname={"Petrechenko"}
@@ -69,7 +66,6 @@ function App() {
       <br/>     
       <WhoAmI name={'Sasha'} surname={"Grygoriev"}
       link={"https://www.google.com"}/>
->>>>>>> 019ba872bc91750a63d2e15ac016187017afa613
     </div>
 
 
