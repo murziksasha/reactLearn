@@ -34,6 +34,9 @@ class WhoAmI extends Component {
   render(){
     const {name, surname, link} = this.props;
     const {text, years, enterText} = this.state;
+
+    console.log(this);
+
       return (
 
         <div style={style} >
