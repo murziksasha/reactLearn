@@ -1,6 +1,7 @@
 
 .App {
   text-align: center;
+  
 }
 
 .card {
@@ -21,4 +22,40 @@
   font-weight: bold;
   padding: 13px;
   margin: 0;
+}
+
+/* this style for Colorize example from book React Learining */
+
+.App {
+  padding: 50px;
+  background-color: #fff;
+}
+
+.colorSquare {
+  box-shadow: 0px 0px 25px 0px #333;
+  width: 342px;
+  height: 242px;
+  margin: 0 auto;
+  margin-bottom: 16px;
+}
+
+.colorArea input{
+  padding: 10px;
+  font-size: 16px;
+  bottom: 2px solid #CCC;
+}
+
+.colorArea button {
+  padding: 10px;
+  font-size: 16px;
+  margin: 10px;
+  background-color: #666;
+  color:#fff;
+  border: 2px solid #666;
+}
+
+.colorArea button:hover{
+  background-color: #111;
+  border-color: #111;
+  cursor: pointer;
 }

@@ -5,77 +5,65 @@ import  './App.css';
 
 
 
-class Circle extends Component {
-
-  constructor(props) {
+class Colorizer extends Component {
+  constructor(props){
     super(props);
     this.state = {
-      number: 0
-    };
+      color:'',
+      bgColor:'white'
+    }
   }
 
-  someClick = (e) => {
-    let currentCount = this.state.number;
 
-    if(e.shiftKey) {
-      currentCount += 10;
-    } 
-    else {
-      currentCount += 1;
-    }
 
+  colorValue = (e) => {
     this.setState({
-      number: currentCount
-    })
+      color: e.target.value
+    });
+    console.log(e.target.value);
   }
 
-  incrClick = (e) => {
- 
-    let currentCount = this.state.number;
-
-    if(e.shiftKey) {
-      currentCount -= 10;
-    } 
-    else {
-      currentCount -= 1;
-    }
-
+  setNewColor = (e) => {
+    e.preventDefault();
     this.setState({
-      number: currentCount
-    })
+      bgColor: this.state.color
+      });
+
+      this._input.focus();
+      this._input.value = '';
   }
 
-  render() {
-    const circleStyle = {
-      padding : 10,
-      margin : 20,
-      display: 'inline-block',
-      backgroundColor: this.props.bgColor,
-      width: 200,
-      height: 200
+  render(){
+    const squareStyle = {
+      backgroundColor: this.state.bgColor
     }
-    const {number} = this.state;
     return(
-   
-      <div style={circleStyle}>
-        <span style={{color: 'white', marginRight: '20px'}}>{number}</span>
-        <button  onClick={this.someClick}>+</button>
-        <button onClick={this.incrClick}>-</button>
+      <div className="colorArea">
+        <div style={squareStyle} className='colorSquare'> </div>
+
+        <form onSubmit={this.setNewColor}>
+          <input onChange={this.colorValue}
+          placeholder='What color you want?'
+          ref={(el) => this._input=el} />
+          <button type='submit'>OK</button>
+        </form>
       </div>
-    )
+    );
   }
 }
 
 
-function App() {
 
+
+function App() {
+ 
 
   return (
 
 
     <div className='App'>
 
-    <Circle bgColor='#999'/>
+        <Colorizer/>
 
     </div>
 
