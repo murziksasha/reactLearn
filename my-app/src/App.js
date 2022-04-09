@@ -1,47 +1,34 @@
 
-import React, {Component} from 'react';
-import {Container} from 'react-bootstrap';
+import React, {useState, useEffect} from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-const style = {
-  'color':'blue',
-  'fontSize': '35px'
+
+
+function Example () {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    document.title = `Вы ${count} раз`;
+  });
+
+  const minus = () => {
+    (
+      setCount(count -1)
+    )
+  }
+
+  return (
+    <>
+        <p>You click {count} ways</p>
+      <button style={{'marginRight': '30px'}} 
+      onClick={() => setCount(count+1)}
+      >Click me</button>
+            <button onClick={minus}
+      >minus click</button>
+    </>
+
+  )
 }
-
-class WhoAmI extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      years: 27,
-      text: '++'
-    }
-
-  }
-
-
-  nextYear = () =>{
-    this.setState(state => ({
-      years: state.years +1
-    }))
-  }
-  
-  render(){
-    const {name, surname, link} = this.props;
-    const {years, text} = this.state;
-      return (
-
-        <div style={style} >
-          <button onClick={this.nextYear}>{text}</button>
-          <h2>My name is {name} surname - {surname}, age {years}</h2>
-          <a href={link}>Link for my profile</a>
-        </div>
-      )
-  }
-
-}
-
 
 function App() {
 
@@ -49,14 +36,8 @@ function App() {
   return (
 
     <div className='App'>
+      <Example/>
 
-      <WhoAmI name={'Ivan'} surname={"Petrechenko"}
-      link={"https://bing.com"}/>
-      <br/>
-      <hr/>
-      <br/>     
-      <WhoAmI name={'Sasha'} surname={"Grygoriev"}
-      link={"https://www.google.com"}/>
     </div>
 
 
