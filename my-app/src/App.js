@@ -3,74 +3,35 @@ import {useState, useEffect} from 'react';
 import './App.css';
 
 import {Container} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-const Slider = (props) => {
-
-  const [slide, setSlide] = useState(() => 0);
-  const [autoplay, setAutoplay] = useState(() => false);
-
-  function logging() {
-    console.log('log!');
-  }
-
-  useEffect(()=>{
-    console.log('effect');
-    document.title = `Slide ${slide}`;
-
-    window.addEventListener('click', logging);
-
-    return () => {
-      window.removeEventListener('click', logging);
-    }
-
-  },[slide])
-
-  useEffect(() => {
-    console.log('toggle state');
-
-  }, [autoplay])
-
-  const changeSlide = (i) => {
-    setSlide(slide => slide + i)
-  }
-
-  const toggleAutoplay = () => {
-    setAutoplay(autoplay => !autoplay)
-  }
-
-    return(
-
-      <Container>
-        <div className="slider w-50 m-auto">
-          <img src="https://media.istockphoto.com/photos/planet-earth-with-some-clouds-americas-view-picture-id186019678?k=20&m=186019678&s=612x612&w=0&h=E9ZFggtDpeOkSlOBg8QgdaOoq5xsOunmBCNMGc2VNFg=" alt="Earth Planet" style={{'width':100}} />
-          <div className="text-center mt-5">Active slide {slide} <br/>{autoplay?'auto':null}</div>
-          <div className="buttons mt-3">
-          <button
-              className='btn btn-primary me-2'
-              onClick={() => changeSlide(-1)}>-1</button>            
-              <button
-              className='btn btn-primary me-2'
-              onClick={() => changeSlide(1)}>+1</button>            
-              <button
-              className='btn btn-primary me-2'
-              onClick={()=>toggleAutoplay()}>Toggle auto play</button>
-          </div>
-        </div>
-      </Container>
-    )
+const multyply = () => {
+  console.log('rendering multiply');
+  return Math.trunc(Math.random()*20);
 }
 
-function App() {
 
-  const [slider, setSlider] = useState(()=>true);
+
+function App() {
+  const [counter, setCounter] = useState(()=> multyply());
+
+  const summator = (i) => {
+    setCounter((prevCounter)=>prevCounter + i);
+    setCounter((prevCounter)=>prevCounter + i);
+  }
+
 
   return (
 
-    <div className='App'>
-      <button onClick={() => setSlider(false) }>Click me</button>
-     {(slider)?<Slider/>:null}
-    </div>
+    <Container>
+      <div className="App">
+        <h1>Counter {counter}</h1>
+        <button className='btn btn-primary'
+        onClick={()=>summator(1)}>ADD</button>
+        <button className='btn btn-success'
+        onClick={()=> summator(-1)}>INC</button>
+      </div>
+    </Container>
 
 
   );
