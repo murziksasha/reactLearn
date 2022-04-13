@@ -1,11 +1,14 @@
 
-import {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect, useCallback, useMemo} from 'react';
 import './App.css';
 
 import {Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+const countTotal = (num) => {
+  console.log('counting...');
+  return num + 10;
+}
 
 const Slider = (props) => {
 
@@ -18,8 +21,7 @@ const Slider = (props) => {
       'https://media.istockphoto.com/photos/planet-earth-with-some-clouds-americas-view-picture-id186019678?k=20&m=186019678&s=612x612&w=0&h=E9ZFggtDpeOkSlOBg8QgdaOoq5xsOunmBCNMGc2VNFg=',
       'https://media.istockphoto.com/photos/planet-earth-with-some-clouds-americas-view-picture-id186019678?k=20&m=186019678&s=612x612&w=0&h=E9ZFggtDpeOkSlOBg8QgdaOoq5xsOunmBCNMGc2VNFg='
     ]
-  },[]); {/* в зависимоти указываем пустой массив это значит что мы получили картинки один раз и будет вызываться эта функция не каждый
-раз - а только если что то поменяться или url картинки или сама картинка */}
+  },[]); 
 
 
   function logging() {
@@ -51,21 +53,29 @@ const Slider = (props) => {
     setAutoplay(autoplay => !autoplay)
   }
 
+  const total = useMemo(()=> {
+    return countTotal(slide);
+  }, [slide]);
+
+  const style = useMemo(()=>({
+    
+      color: slide > 4 ? 'red': 'black'
+    
+  }),[slide])
+
+  useEffect(()=>{
+    console.log('styling....');
+  },[style]);
+
     return (
 
       <Container>
         <div className="slider w-50 m-auto">
-{/* 
-        {
-          getSomeImages().map((url, i) => {
-            return (
-              <img key ={i} src={url} alt="Earth Planet" 
-              className='d-block w-50'/>
-            )          
-          })
-        } */}
 
-        <Slide getSomeImages={getSomeImages}/> {/*как провс передается useCallback в дочерний компонент */}
+        <Slide getSomeImages={getSomeImages}/> 
+
+        <div className="text-center mt-5"
+        style={style}>Total {total}</div>
 
           <div className="text-center mt-5">Active slide {slide} <br/>{autoplay?'auto':null}</div>
           <div className="buttons mt-3">
@@ -85,14 +95,12 @@ const Slider = (props) => {
 }
 
 const Slide = ({getSomeImages}) => {
-  const [images, setImages]  =  useState([]); //состояние массив которое потом заполнится изображениями
-  useEffect(()=>{ //когда компонент будет создан и если он вдруг измениться то тогда перерендериться
-    setImages(getSomeImages())   //устанавливает наше состояние в images
-            //а внутри используется запрос получения картинок
+  const [images, setImages]  =  useState([]);
+  useEffect(()=>{ 
+    setImages(getSomeImages())   
 
-  },[getSomeImages]) //в зависимость указываем саму функцию по установлению картинки (может измениться адресс картинки и др)
-  //дословно когда эта функция измениться - то только тогда будет запускатся useEffect повторно
-  return ( //возвращаем из этого копонента
+  },[getSomeImages]) 
+  return (
     <>
     {images.map((url, i) =><img key ={i} src={url} alt="Earth Planet" 
               className='d-block w-50'/>)}
