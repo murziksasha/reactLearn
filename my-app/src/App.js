@@ -1,61 +1,47 @@
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useMemo} from 'react';
 import './App.css';
 
 import {Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-
+const complexCompute = (num) => {
+  let i = 0;
+  while (i < 1000000000) i++
+  return num*2
+}
 
 
 function App() {
 
-const [type, setType] = useState('users');
-const [data, setData] = useState([]);
-const [pos, setPos] = useState({
-  x:0, y:0
-})
+  const [number, setNumber] = useState(42);
+  const [colored, setColored] = useState(false);
 
-// useEffect(()=>{
-//   console.log('some effect');
-// })
+  const computed = useMemo(() => {
+    return complexCompute(number);
+  },[number])
 
-const mouseMoveHandler = event => {
-  setPos({
-    x: event.clientX,
-    y: event.clientY
-  })
-}
+  const styles = useMemo(() => ({
+    color: colored ? 'yellow': 'purple'
+  }),[colored])
 
-useEffect(()=>{
-  fetch(`https://jsonplaceholder.typicode.com/${type}`)
-  .then(response => response.json())
-  .then(json => setData(json))
-},[type])
+  useEffect(() =>{
+    console.log('Styles changed');
+  },[styles])
 
-useEffect(() => {
-  window.addEventListener('mousemove', mouseMoveHandler)
-
-  return () => {
-    window.removeEventListener(mouseMoveHandler)
-  }
-}, [])
 
   return (
 
     <Container>
-      <div className="App">
-        <h1>Resurses {type}</h1>
-        <button className='btn btn-primary'
-        onClick={()=>setType('users')}>some</button>
-        <button
-        onClick={()=>setType('todos')}>ToDo</button>
-        <button className='btn btn-danger'
-        onClick={()=>setType('posts')}>Posts</button>
-        <pre>{JSON.stringify(pos)}</pre>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      </div>
+      <h1 style={styles}>Countable Props {number}   and {computed}</h1>
+      <button className='btn btn-success'
+      onClick={() => setNumber(prev =>prev+1)}>ADD</button>
+      <button className='btn btn-danger'
+      onClick={() => setNumber(prev =>prev-1)}>INC</button>
+      <button className='btn btn-warning'
+      onClick={() => setColored(prev => !prev)}>Change Color</button>
+
     </Container>
 
 
