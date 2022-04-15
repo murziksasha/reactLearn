@@ -1,42 +1,60 @@
 
-import {useState, useRef, useEffect} from 'react';
+import {useState} from 'react';
 import './App.css';
 
 import {Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+function useInputWithValidate (initialValue) {
+  const [value, setValue] = useState(initialValue);
 
+  const onChange = event => {
+    setValue(event.target.value)
+  }
+
+  const validateInput = () => {
+    return value.search(/\d/) >=0
+  }
+
+  return {value, onChange, validateInput}
+
+}
 
 function App() {
 
-  const [text, setText] = useState('');
+  const input =  useInputWithValidate('');
+  const textArea = useInputWithValidate('');
 
+ 
 
-  const myRef = useRef(1);
+  const color = input.validateInput() ? 'text-danger' : null;
 
-  useEffect(()=>{
-    myRef.current = text;
-    
-  })
 
 
   return (
 
     <div className='App'>
       <Container >
-        <form className='w-50 border mt-5 p-3 m-auto'>
+        <form className='w-150 border mt-5 p-3 m-auto'>
             <div className="mb-3">
-              <label htmlFor="exampleFromControlInput1">Email address</label>
-              <input onChange={(e)=>setText(e.target.value)}
+              <input value={`${input.value}  /  ${textArea.value}`} type="text" readOnly />
+              <label htmlFor="exampleFromControlInput1"
+              >Email address</label>
+              <input
+              onChange={input.onChange}
                type='email'
-              className='from-label' placeholder='name@forexample'
+               value={input.value}
+              className={`from-label ${color}`} placeholder='name@forexample'
               id="exampleFromControlInput1"/>
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFromControlTextArea1">Email address</label>
-              <textarea value={myRef.current}
+              <label htmlFor="exampleFromControlTextArea1">Descriebe something</label>
+              <textarea
                id="exampleFromControlTextArea1" cols="30" rows="10"
-              className='form-control' rows='3'></textarea>
+              className='form-control' rows='3'
+              onChange={textArea.onChange}
+              value={textArea.value}></textarea>
+              
             </div>
 
         </form>
