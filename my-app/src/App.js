@@ -1,42 +1,50 @@
 
-import {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useContext} from 'react';
 import './App.css';
 
-import ItemsList from './ItemList';
+
 
 import {Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+function useLogger(value){  //следим закаким то значением
+    useEffect(()=>{
+      console.log(value)
+    }, [value])
+  
+}
 
+function useInput(initialValue) {
+  const [value, setValue] = useState(initialValue);
 
+  const onChange = event => setValue(event.target.value);
+
+  const clear = () => setValue('');
+
+  return {
+    bind:{value, onChange},
+    value,
+    clear
+  }
+}
 
 
 function App() {
 
-  const [count, setCount] = useState(1);
-  const [colored, setColored] = useState(false);
+const input = useInput('');
 
-
-  const styles ={
-    color: colored ? 'yellow': 'purple'
-  }
-
-  const generateItemsFromApi = useCallback( () => {
-    return new Array(count).fill('').map((_, i) => `Item ${i + 1}`)
-  },[count])
-
+useLogger(input.value);
 
   return (
 
     <Container>
-      <h1 style={styles}>Countable Props {count}</h1>
-      <button className='btn btn-success'
-      onClick={() => setCount(prev =>prev+1)}>ADD</button>
-      <button className='btn btn-danger'
-      onClick={() => setColored(prev => !prev)}>INC</button>
 
-      <ItemsList getItems={generateItemsFromApi}/>
+      <h1>Hello: {input.value}</h1>
 
+    <input type='text' value={input.value} 
+    {...input.bind}/>  {/*Прием что б jsx не полчал по спреду никаких лишних свойств*/}
+      <button className="btn btn-warning"
+      onClick={input.clear}>Clear</button>
     </Container>
 
 
