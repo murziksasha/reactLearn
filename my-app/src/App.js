@@ -1,81 +1,80 @@
-
-import {useState, useEffect} from 'react';
+import {useState, memo, Component} from 'react';
+import {Container} from 'react-bootstrap';
 import './App.css';
 
-import {Container} from 'react-bootstrap';
+// function propsCompare(prevProps, nextProps) {
+//   return prevProps.mail.name === nextProps.mail.name && prevProps.text === nextProps.text;
+// }
 
+const Form = memo((props) => {
 
-const Slider = (props) => {
+  console.log('render');
 
-  const [slide, setSlide] = useState(() => 0);
-  const [autoplay, setAutoplay] = useState(() => false);
-
-  function logging() {
-    console.log('log!');
-  }
-
-  useEffect(()=>{
-    console.log('effect');
-    document.title = `Slide ${slide}`;
-
-    window.addEventListener('click', logging);
-
-    return () => {
-      window.removeEventListener('click', logging);
-    }
-
-  },[slide])
-
-  useEffect(() => {
-    console.log('toggle state');
-
-  }, [autoplay])
-
-  const changeSlide = (i) => {
-    setSlide(slide => slide + i)
-  }
-
-  const toggleAutoplay = () => {
-    setAutoplay(autoplay => !autoplay)
-  }
-
-    return(
-
-      <Container>
-        <div className="slider w-50 m-auto">
-          <img src="https://media.istockphoto.com/photos/planet-earth-with-some-clouds-americas-view-picture-id186019678?k=20&m=186019678&s=612x612&w=0&h=E9ZFggtDpeOkSlOBg8QgdaOoq5xsOunmBCNMGc2VNFg=" alt="Earth Planet" style={{'width':100}} />
-          <div className="text-center mt-5">Active slide {slide} <br/>{autoplay?'auto':null}</div>
-          <div className="buttons mt-3">
-          <button
-              className='btn btn-primary me-2'
-              onClick={() => changeSlide(-1)}>-1</button>            
-              <button
-              className='btn btn-primary me-2'
-              onClick={() => changeSlide(1)}>+1</button>            
-              <button
-              className='btn btn-primary me-2'
-              onClick={()=>toggleAutoplay()}>Toggle auto play</button>
-          </div>
-        </div>
-      </Container>
+    return (
+        <Container>
+            <form className="w-50 border mt-5 p-3 m-auto">
+                <div className="mb-3">
+                    <label htmlFor="exampleFormControlInput1" className="form-label mt-3">Email address</label>
+                    <input value={props.mail} type="email" className='form-control' id="exampleFormControlInput1" placeholder="name@example.com"/>
+                    </div>
+                    <div className="mb-3">
+                    <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
+                    <textarea value={props.text} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </form>
+        </Container>
     )
-}
+} ) 
+
+// class Form extends Component {
+
+//   shouldComponentUpdate(nextProps){
+//     if(this.props.mail.name === nextProps.mail.name){
+//       return false;
+//     } return true;
+//   }
+
+//   render() {
+
+ 
+//   console.log('render');
+
+//     return (
+//         <Container>
+//             <form className="w-50 border mt-5 p-3 m-auto">
+//                 <div className="mb-3">
+//                     <label htmlFor="exampleFormControlInput1" className="form-label mt-3">Email address</label>
+//                     <input value={this.props.mail.name} type="email" className='form-control' id="exampleFormControlInput1" placeholder="name@example.com"/>
+//                     </div>
+//                     <div className="mb-3">
+//                     <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
+//                     <textarea value={this.props.text} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+//                 </div>
+//             </form>
+//         </Container>
+//     )
+//   }
+// }
 
 function App() {
+    const [data, setData] = useState({
+        mail:"name@example.com",
+        text: 'some text'
+    });
 
-  const [slider, setSlider] = useState(()=>true);
-
-  return (
-
-    <div className='App'>
-      <button onClick={() => setSlider(false) }>Click me</button>
-     {(slider)?<Slider/>:null}
-    </div>
-
-
-  );
-
+    return (
+        <>
+            <Form mail={data.mail} text={data.text}
+            onLog={() => console.log('wow')}/>
+            <button 
+                onClick={() => setData({
+                    mail:"name@example.com",
+                    text: 'another text'
+                })}>
+                Click me
+            </button>
+        </>
+    );
 }
-
 
 export default App;
