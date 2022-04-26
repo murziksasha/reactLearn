@@ -1,5 +1,5 @@
 
-import {useState, createContext, Component} from 'react';
+import {useState, createContext, useContext} from 'react';
 import {Container} from 'react-bootstrap';
 import './App.css';
 
@@ -7,6 +7,7 @@ const dataContext = createContext({
    
     mail:"name@example.com",
     text: 'some text'
+
 });
 
 const {Provider, Consumer} = dataContext;
@@ -33,36 +34,53 @@ const Form = (props) => {
     )
 }
 
-class InputComponent extends Component{
-    // вариант при помощи статического свойства static
-    static contextType = dataContext;
+const InputComponent = () => {
 
+  const context = useContext(dataContext);
 
-    render() {
-        return (
-            // <Consumer> //первый вариант
-            //      {
-            //          value => {
-            //              return(
-            //                 <input value={value.mail} type='mail'
-            //                 className='form-control' placeholder="name@example.com"/>
-            //              )
-            //          }
-            //      }
-            // </Consumer>
-
-            <input value={this.context.mail} type='mail'
-            className='form-control' placeholder="name@example.com"/>
-        )
-    }
+  return(
+    <input value={context.mail} type='mail'
+    className='form-control' placeholder="name@example.com"
+    onFocus={context.forceChangeMail}/>
+  )
 }
+
+
+// class InputComponent extends Component{
+//     // вариант при помощи статического свойства static
+//     static contextType = dataContext;
+
+
+//     render() {
+//         return (
+//             // <Consumer> //первый вариант
+//             //      {
+//             //          value => {
+//             //              return(
+//             //                 <input value={value.mail} type='mail'
+//             //                 className='form-control' placeholder="name@example.com"/>
+//             //              )
+//             //          }
+//             //      }
+//             // </Consumer>
+
+//             <input value={this.context.mail} type='mail'
+//             className='form-control' placeholder="name@example.com"/>
+//         )
+//     }
+// }
 
 
 function App() {
     const [data, setData] = useState({
         mail:"name@example.com",
-        text: 'some text'
+        text: 'some text',
+        forceChangeMail: forceChangeMail
     });
+
+    function forceChangeMail() {
+      SVGMetadataElement({...data, mail: 'anTest@gmail.com'})
+    }
 
     return (
         <Provider value={data}>
@@ -71,7 +89,8 @@ function App() {
             <button 
                 onClick={() => setData({
                     mail:"name@example.com",
-                    text: 'another text'
+                    text: 'another text',
+                    forceChangeMail: forceChangeMail
                 })}>
                 Click me
             </button>
