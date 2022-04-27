@@ -1,100 +1,71 @@
-
-import {useState, createContext, useContext} from 'react';
+import {useState, useReducer} from 'react';
 import {Container} from 'react-bootstrap';
 import './App.css';
-
-const dataContext = createContext({
-   
-    mail:"name@example.com",
-    text: 'some text'
-
-});
-
-const {Provider, Consumer} = dataContext;
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-const Form = (props) => {
+function reducer(state, action){
+    switch (action.type) {
+        case 'toggle':
+            return {autoplay: !state.autoplay};
+        case 'slow':
+            return{autoplay: 300};
+        case 'fast':
+            return{autoplay:700};
+        case 'custom':
+            return{autoplay: action.payload};
+        default:
+            throw new Error();
+    }
+}
 
-  console.log('render');
+function init(initial){
+    return {autoplay: initial};
+}
+
+const Slider = ({initial}) => {  //из пропсов достаём иниtial
+    const [slide, setSlide] = useState(0);
+    // const [autoplay, setAutoplay] = useState(false);
+    const [autoplay, dispatch] = useReducer(reducer,initial, init); //подставляем переданный пропс как второй аргумента в useReducer
+
+    function changeSlide(i) {
+        setSlide(slide => slide + i);
+    }
 
     return (
         <Container>
-            <form className="w-50 border mt-5 p-3 m-auto">
-                <div className="mb-3">
-                    <label htmlFor="exampleFormControlInput1" className="form-label mt-3">Email address</label>
-                    <InputComponent/>
-                    </div>
-                    <div className="mb-3">
-                    <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
-                    <textarea value={props.text} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <div className="slider w-50 m-auto">
+                <img className="d-block w-100" src="https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg" alt="slide" />
+                <div className="text-center mt-5">Active slide {slide} <br/>{autoplay.autoplay ? 'auto' : null} </div>
+                <div className="buttons mt-3">
+                    <button 
+                        className="btn btn-primary me-2"
+                        onClick={() => changeSlide(-1)}>-1</button>
+                    <button 
+                        className="btn btn-primary me-2"
+                        onClick={() => changeSlide(1)}>+1</button>
+                    <button 
+                        className="btn btn-primary me-2"
+                        onClick={() => dispatch({type: 'toggle'})}>toggle autoplay</button>
+                    <button 
+                        className="btn btn-primary me-2"
+                        onClick={() => dispatch({type: 'slow'})}>slow </button>
+                    <button 
+                        className="btn btn-primary me-2"
+                        onClick={() => dispatch({type: 'fast'})}>fast </button>
+                    <button 
+                        className="btn btn-primary me-2"
+                        onClick={(e) => dispatch({type: 'custom', payload: +e.target.textContent})}>1000 </button>
                 </div>
-            </form>
+            </div>
         </Container>
     )
 }
 
-const InputComponent = () => {
-
-  const context = useContext(dataContext);
-
-  return(
-    <input value={context.mail} type='mail'
-    className='form-control' placeholder="name@example.com"
-    onFocus={context.forceChangeMail}/>
-  )
-}
-
-
-// class InputComponent extends Component{
-//     // вариант при помощи статического свойства static
-//     static contextType = dataContext;
-
-
-//     render() {
-//         return (
-//             // <Consumer> //первый вариант
-//             //      {
-//             //          value => {
-//             //              return(
-//             //                 <input value={value.mail} type='mail'
-//             //                 className='form-control' placeholder="name@example.com"/>
-//             //              )
-//             //          }
-//             //      }
-//             // </Consumer>
-
-//             <input value={this.context.mail} type='mail'
-//             className='form-control' placeholder="name@example.com"/>
-//         )
-//     }
-// }
-
-
 function App() {
-    const [data, setData] = useState({
-        mail:"name@example.com",
-        text: 'some text',
-        forceChangeMail: forceChangeMail
-    });
-
-    function forceChangeMail() {
-      SVGMetadataElement({...data, mail: 'anTest@gmail.com'})
-    }
-
     return (
-        <Provider value={data}>
-            <Form text={data.text}
-            onLog={() => console.log('wow')}/>
-            <button 
-                onClick={() => setData({
-                    mail:"name@example.com",
-                    text: 'another text',
-                    forceChangeMail: forceChangeMail
-                })}>
-                Click me
-            </button>
-        </Provider>
+        <Slider initial={false}/> //готовое значение для ленивого создания начального состояния
     );
 }
 
